@@ -1,10 +1,8 @@
 #include <vector>
 #include <iostream>
 #include <cmath> // Required for the pow() function
-
-
-std::vector<double> intgrl();
 constexpr double PI=3.14159265358979323;
+std::vector<double> intgrl();
 
 
 // Setup for HF matrix elements
@@ -34,20 +32,27 @@ double main(){
 
 // std::vector<double> intgrl()
 
+void collect_ints();
+
+
+
+
+// ================= Basis fxn integrals ===================
+
 // Overlap integral
-inline double S(double alpha,double beta, double r){
+double S(double alpha,double beta, double r){
     double ovlap= PI/(pow((alpha+beta),1.5)) * std::exp(-alpha*beta*r*r/(alpha+beta));
     return ovlap;
 }
 
 // KE integral
-inline double T(double alpha,double beta, double r){
+double T(double alpha,double beta, double r){
     double res= PI/(pow((alpha+beta),1.5)) * std::exp(-alpha*beta*R*R/(alpha+beta));
     return res;
 }
 
 // Boys helper
-inline double boys(double t) {
+double boys(double t) {
     if (t < 1e-8) {
         // limit F0(t → 0) = 1
         return 1.0;
@@ -63,7 +68,7 @@ double V(double alpha, double beta, double rab2, double rcp2, double zc){
 }
 
 // 2e integral
-inline double twoe(double alpha, double beta, double cgamma, double ddelta,
+double twoe(double alpha, double beta, double cgamma, double ddelta,
                    double rab2, double rcd2, double rpq2) {
     double denom = (alpha + beta) * (cgamma + ddelta) * std::sqrt(alpha + beta + cgamma + ddelta);
     double pre = 2.0 * std::pow(PI, 2.5) / denom;
@@ -74,17 +79,38 @@ inline double twoe(double alpha, double beta, double cgamma, double ddelta,
 }
 
 
+// =================== Diagonalizing fxn ====================
 
+inline std::tuple<std::vector<std::vector<double>>,
+                  std::vector<std::vector<double>>>
+diag(const std::vector<std::vector<double>>& fmat) {
+    double theta = PI / 4.0;
 
-// for (int i = 0; i < nBas; i++) {
-//     alphas2[i] = alphas1[i] * lam * lam;
-// }
+    if (std::abs(fmat[0][0] - fmat[1][1]) > 1e-10) {
+        theta = 0.5 * std::atan(2.0 * fmat[0][1] / (fmat[0][0] - fmat[1][1]));
+    }
 
+    std::vector<std::vector<double>> cmat = {
+        {std::cos(theta), std::sin(theta)},
+        {std::sin(theta), -std::cos(theta)}
+    };
 
+    std::vector<std::vector<double>> emat(2, std::vector<double>(2, 0.0));
 
+    emat[0][0] = fmat[0][0] * std::cos(theta) * std::cos(theta)
+               + fmat[1][1] * std::sin(theta) * std::sin(theta)
+               + fmat[0][1] * std::sin(2.0 * theta);
 
-// std::vector<double> PreCoeffs(std::vector<double>(nBasis,0.0))
+    emat[1][1] = fmat[1][1] * std::cos(theta) * std::cos(theta)
+               + fmat[0][0] * std::sin(theta) * std::sin(theta)
+               - fmat[0][1] * std::sin(2.0 * theta);
 
-// int
-// std::vector<std::vector<double>> alphas(nBas, std::vector<double>(nBas, 0.0));
-// alphas[0][0] = 0.13;
+    // order eigvals correctly
+    if (emat[1][1] > emat[0][0]) {
+        std::swap(emat[0][0], emat[1][1]);
+        std::swap(cmat[0][0], cmat[0][1]);
+        std::swap(cmat[1][0], cmat[1][1]);
+    }
+
+    return {cmat, emat};
+}
