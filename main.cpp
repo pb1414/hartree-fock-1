@@ -6,6 +6,10 @@
 
 
 // =======================  Main  ==========================
+int main(){
+
+    return 0;
+}
 void callHF(){
     //2-3 Calc matrices
     double R = 1.4;

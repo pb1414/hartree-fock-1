@@ -2,6 +2,7 @@
 #include <iostream>
 #include <cmath> // Required for the pow() function
 #include "params.h"
+#include "integrals.h"
 double Sfxn(double alpha,double beta, double r); double T(double alpha,double beta, double r); double V(double alpha, double beta, double rab2, double rcp2, double zc);
 double twoe(double alpha, double beta, double cgamma, double ddelta, double rab2, double rcd2, double rpq2); struct IntMats;
 
@@ -125,12 +126,3 @@ double twoe(double alpha, double beta, double cgamma, double ddelta,
 
 
 // ================= IntMats Struct ===================
-
-
-struct IntMats {
-    std::vector<std::vector<double>> S;
-    std::vector<std::vector<double>> X;
-    std::vector<std::vector<double>> XT;
-    std::vector<std::vector<double>> Hcore;
-    std::vector<std::vector<std::vector<std::vector<double>>>> TwoEIntegrals;
-};

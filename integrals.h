@@ -1,6 +1,6 @@
 #pragma once
-
 #include <vector>
+#include <iostream>
 
 //Integral grouping
 struct IntMats {
@@ -10,7 +10,6 @@ struct IntMats {
     std::vector<std::vector<double>> Hcore;
     std::vector<std::vector<std::vector<std::vector<double>>>> TwoEIntegrals;
 };
-
 IntMats collect_integrals(double r);
 double Sfxn(double alpha, double beta, double r);
 double T(double alpha, double beta, double r);
