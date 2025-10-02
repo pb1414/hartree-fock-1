@@ -42,7 +42,7 @@ IntMats collect_integrals(double r){
                             nBas, std::vector<double>(nBas, 0.0))));
 
     for (int bi = 0; bi < nBas; bi++) {
-        for (int bj = 0; bj < nBas; bj++) {        //Could start at bi here but just explicitly doing it out
+        for (int bj = 0; bj < nBas; bj++) {        //Could start at bi here, but just explicitly doing it out
             for (int i = 0; i < nPrim; i++) {
                 for (int j = 0; j < nPrim; j++) {
                     double alpha = alphas[bi][i];
