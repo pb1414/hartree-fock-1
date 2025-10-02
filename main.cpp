@@ -7,22 +7,23 @@
 
 // =======================  Main  ==========================
 int main(){
-
-    return 0;
-}
-void callHF(){
     //2-3 Calc matrices
-    double R = 1.4;
+    double R = 1.4632;
     IntMats intMatsR = collect_integrals(R);
-    //4 Guess P density matrix
-    std::vector<std::vector<double>> P = {
-        {0.0, 0.0},
-        {0.0, 0.0}
-    };
-    
+    //4-10 Guess P density matrix and iterate
+    // std::vector<std::vector<double>> P = guessP();
 
-    //5-10 Call iterations
 
+
+    //print Results
+    std::cout << "Finished!" << std::endl;
+    for (const auto& row : intMatsR.Hcore) {
+        for (const auto& elem : row) {
+            std::cout << elem << " ";
+        }
+        std::cout << std::endl;
+    }
+    return 0;
 }
 
 

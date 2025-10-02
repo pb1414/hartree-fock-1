@@ -1,0 +1,13 @@
+# Compiled binaries
+*.exe
+*.dll
+*.obj
+*.lib
+*.pdb
+
+# Build directories
+.vscode/
+*.log
+
+# Temporary files
+*.tmp
