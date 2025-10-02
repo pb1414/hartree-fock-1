@@ -1,7 +1,7 @@
 #include <vector>
 #include <iostream>
 #include <cmath> // Required for the pow() function
-#include "params.h"
+constexpr double PI = 3.14159265358979323;
 
 
 // =================== Diag fxn ====================
@@ -44,7 +44,8 @@ diag(const std::vector<std::vector<double>>& fmat) {
 // =================== 2x2matMath ====================
 std::vector<std::vector<double>> matMult(
     const std::vector<std::vector<double>>& A,
-    const std::vector<std::vector<double>>& B) 
+    const std::vector<std::vector<double>>& B,
+    int maxIndex) 
 {
     // Initialize result matrix with zeros
     std::vector<std::vector<double>> C(2, std::vector<double>(2, 0.0));

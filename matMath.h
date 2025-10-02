@@ -8,4 +8,5 @@ diag(const std::vector<std::vector<double>>& fmat);
 
 std::vector<std::vector<double>> matMult(
     const std::vector<std::vector<double>>& A,
-    const std::vector<std::vector<double>>& B);
+    const std::vector<std::vector<double>>& B,
+    int maxIndex);
