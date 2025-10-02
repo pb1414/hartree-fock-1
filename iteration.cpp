@@ -10,29 +10,33 @@
 
 std::vector<std::vector<double>> guessP(){
     std::vector<std::vector<double>> guess_naive = {
-        {0.25, 0,25},
-        {0.25,0.25}
+        {0.0, 0.0},
+        {0.0, 0.0}
     };
     return guess_naive;
 }
 
 // ==================== Single scf iteration ================
 
-std::vector<std::vector<double>> iterationP(std::vector<std::vector<double>> P_in, IntMats intMatsR){
-    std::cout << "Starte5d ";
-
+std::tuple<std::vector<std::vector<double>>, std::vector<std::vector<double>>> iterationP(std::vector<std::vector<double>> P_in, IntMats intMatsR){
     //5-6 Add G terms to Hcore to get F
     std::vector<std::vector<double>> F= intMatsR.Hcore;
     for (int bi = 0; bi < nBas; bi++) {
         for (int bj = 0; bj < nBas; bj++) {
-            for (int bk = 0; bk < nBas; bi++) {
-                for (int bl = 0; bl < nBas; bj++) {
-                    F[bi][bj] = F[bi][bj] + P_in[bi][bj]*intMatsR.TwoEIntegrals[bi][bj][bk][bl];
+            for (int bk = 0; bk < nBas; bk++) {
+                for (int bl = 0; bl < nBas; bl++) {
+                    F[bi][bj] = F[bi][bj] + P_in[bk][bl]*(intMatsR.TwoEIntegrals[bi][bj][bl][bk] - 0.5 * intMatsR.TwoEIntegrals[bi][bk][bl][bj]);
                 }
             }
         }
     }
-    std::cout << "Starte7d ";
+    for (const auto& row : F) {
+        for (const auto& elem : row) {
+            std::cout << elem << " ";
+        }
+        std::cout << std::endl;
+    }
+
 
     //7 Get F'
     std::vector<std::vector<double>> mat1= matMult(intMatsR.XT, F, 2);
@@ -51,5 +55,5 @@ std::vector<std::vector<double>> iterationP(std::vector<std::vector<double>> P_i
         };
     std::vector<std::vector<double>> P_new = matMult(C, CT, 1);
 
-    return P_new;
+    return {P_new, std::get<1>(Cs_Es)};
 }

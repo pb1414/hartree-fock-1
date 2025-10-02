@@ -31,7 +31,7 @@ diag(const std::vector<std::vector<double>>& fmat) {
                - fmat[0][1] * std::sin(2.0 * theta);
 
     // order eigvals correctly
-    if (emat[1][1] > emat[0][0]) {
+    if (emat[1][1] < emat[0][0]) {
         std::swap(emat[0][0], emat[1][1]);
         std::swap(cmat[0][0], cmat[0][1]);
         std::swap(cmat[1][0], cmat[1][1]);
@@ -52,8 +52,11 @@ std::vector<std::vector<double>> matMult(
 
     for (int i = 0; i < 2; i++) {
         for (int j = 0; j < 2; j++) {
-            for (int k = 0; k < 2; k++) {
+            for (int k = 0; k < maxIndex; k++) {
                 C[i][j] += A[i][k] * B[k][j];
+                if (maxIndex==1){
+                    C[i][j] = C[i][j] * 2.0;  //This is activated when density matrix is being made
+                }
             }
         }
     }

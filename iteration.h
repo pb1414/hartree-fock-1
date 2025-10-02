@@ -4,4 +4,5 @@
 #include "integrals.h"
 
 std::vector<std::vector<double>> guessP();
-std::vector<std::vector<double>> iterationP(std::vector<std::vector<double>> P_in, IntMats intMatsR);
+std::tuple<std::vector<std::vector<double>>, std::vector<std::vector<double>>>
+iterationP(std::vector<std::vector<double>> P_in, IntMats intMatsR);
