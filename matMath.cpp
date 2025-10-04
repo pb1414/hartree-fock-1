@@ -1,4 +1,5 @@
 #include <vector>
+#include <tuple>
 #include <iostream>
 #include <cmath> // Required for the pow() function
 constexpr double PI = 3.14159265358979323;

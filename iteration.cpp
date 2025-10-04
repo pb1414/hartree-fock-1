@@ -1,5 +1,6 @@
 #include <vector>
 #include <iostream>
+#include <tuple>
 #include <cmath>
 #include "params.h"
 #include "integrals.h"
@@ -29,12 +30,6 @@ std::tuple<std::vector<std::vector<double>>, std::vector<std::vector<double>>> i
                 }
             }
         }
-    }
-    for (const auto& row : F) {
-        for (const auto& elem : row) {
-            std::cout << elem << " ";
-        }
-        std::cout << std::endl;
     }
 
 

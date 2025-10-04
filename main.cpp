@@ -1,4 +1,5 @@
 #include <vector>
+#include <tuple>
 #include <iostream>
 #include <cmath> // Required for the pow() function
 #include "params.h"
@@ -16,25 +17,24 @@ int main(){
     std::vector<std::vector<double>> P = guessP();
     std::vector<std::vector<double>> P2 = P;
 
-    std::cout << "Started ";
+    std::cout << "Started" << std::endl;
 
     //5-10 Iterate
-    double p00prior=100.0;
     std::vector<std::vector<double>> es(2, std::vector<double>(2, 0.0));
-
-    int big =11;
-    while (big>1){
+    double p00prior=1.000;
+    
+    while (abs(P[0][0]-p00prior)>0.001){
         p00prior=P[0][0];
         std::tuple<std::vector<std::vector<double>>, std::vector<std::vector<double>>> PandEs = iterationP(P, intMatsR);
         P= std::get<0>(PandEs);
         es= std::get<1>(PandEs);
-        big -= 1;
+        std::cout << "New eigenvalues: " << es[0][0] << ", " << es[1][1] << std::endl;
     }
 
 
     //12 Report results
     
-    std::cout << "Finished ";
+    std::cout << "Finished. Final eigenvalue matrix:" << std::endl;
     for (const auto& row : es) {
         for (const auto& elem : row) {
             std::cout << elem << " ";
